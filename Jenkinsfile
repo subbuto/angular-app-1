@@ -1,7 +1,7 @@
 pipeline {
   agent any
   tools {
- nodejs 'name'
+ nodejs '14.1.0'
  }
   environment {
     registry = 'subhashini.kuruva540@gmail.com/subhashini.kuruva540@gmail.com'
