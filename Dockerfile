@@ -1,5 +1,5 @@
 FROM node:latest
 COPY . .
 RUN npm install
-EXPOSE http://13.126.122.160/
+EXPOSE 9876
 CMD ["node", "index.js"]
