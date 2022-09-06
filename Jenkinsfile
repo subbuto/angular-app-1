@@ -1,48 +1,28 @@
 pipeline {
   agent any
-  tools {
- nodejs '14.1.0'
- }
   environment {
-    registry = 'subhashini.kuruva540@gmail.com/subhashini.kuruva540@gmail.com'
-    registryCredential = 'dockerhubcredentials'
+    DOCKERHUB_CREDENTIALS = credentials('jenkins-docker')
   }
   stages {
-    stage('INSTALL PACKAGES') {
+    stage('SCM Checkout') {
       steps {
-        sh "npm install"
+        git 'https://github.com/subbuto/angular-app-1.git'      
       }
     }
-    stage('TEST') {
+     stage('Build dockerimage') {
       steps {
-        echo "insert your testing here"
+        sh 'docker build -t subhashinikuruva/nodeapp:$BUILD_NUMBER .'
       }
     }
-    stage('BUILD APP') {
+    stage('login to dockerhub') {
       steps {
-        sh "node_modules/.bin/ng build --prod"
+        sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
       }
     }
-    stage("BUILD DOCKER") {
+    stage('push image') {
       steps {
-        script {
-          dockerImageBuild = docker.build registry + ":latest"
+        sh 'docker push subhashinikuruva/nodeapp:$BUILD_NUMBER'
         }
       }
     }
-     stage("DEPLOY DOCKER") {
-       steps {
-          script {
-            docker.withRegistry('', registryCredential) {
-              dockerImageBuild.push()
-            }
-         }
-      }
-   }
-    stage("DEPLOY & ACTIVATE") {
-      steps {
-        echo 'this part will differ depending on setup'
-      }
-    }
-  }
-}
+   
