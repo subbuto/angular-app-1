@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  tools {
+ nodejs 'name'
+ }
   environment {
     registry = 'subhashini.kuruva540@gmail.com/subhashini.kuruva540@gmail.com'
     registryCredential = 'dockerhubcredentials'
