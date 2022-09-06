@@ -1,7 +1,5 @@
-FROM node:alpine
-WORKDIR '/app' 
-COPY package.json .
+FROM node:latest
+COPY nodeapp/* /usr/src/app
 RUN npm install
-COPY . .
 EXPOSE http://13.126.122.160/
-CMD npm run start
+CMD ["node", "index.js"]
