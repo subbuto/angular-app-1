@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Run container on server') {
           steps {
-            sh  'docker run -p 8080:8080 subhashinikuruva/nodeapp:latest'
+            sh  'docker run -p 80:80 subhashinikuruva/nodeapp:latest'
             
           }
         }
