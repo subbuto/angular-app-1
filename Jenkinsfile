@@ -26,7 +26,8 @@ pipeline {
         }
         stage('Run container on server') {
           steps {
-            sh  'docker run -p 80:80 subhashinikuruva/nodeapp:latest'
+            sshagent (credentials: ['deploy-dev']) {
+               sh 'ssh -o StrictHostKeyChecking=no ec2-user@3.111.213.81'
             
           }
         }
