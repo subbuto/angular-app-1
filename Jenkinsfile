@@ -28,7 +28,7 @@ pipeline {
           steps {
             dockerRun = 'docker run -p 8080:8080 -d --name nodeapp subhashinikuruva/nodeapp:$BUILD_NUMBER'
             sshagent(['jenkins-credentials']) {
-              sh "ssh -o StrictHostKeyChecking=no  ec2-user@3.111.213.81 ${dockerRun}"
+              sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no  ec2-user@3.111.213.81 ${dockerRun}"
             }
           }
         }
