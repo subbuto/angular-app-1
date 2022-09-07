@@ -27,7 +27,7 @@ pipeline {
         stage('Run container on server') {
           steps {
             sshagent(['jenkins']) {
-              sh returnStatus: true, script: 'ssh -o StrictHostKeyChecking=no ec2-user@3.111.213.81''
+              sh returnStatus: true, script: 'ssh -o StrictHostKeyChecking=no ec2-user@3.111.213.81'
             }
             
           }
