@@ -28,6 +28,7 @@ pipeline {
           steps {
             sshagent (credentials: ['deploy-dev']) {
                sh 'ssh -o StrictHostKeyChecking=no ec2-user@3.111.213.81'
+            }
             
           }
         }
