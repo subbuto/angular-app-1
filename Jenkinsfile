@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Build Dockerimage') {
           steps {
-            sh 'docker build -t subhashinikuruva/my-app:1.0 .'
+            sh 'docker build -t subhashinikuruva/nodeapp:$BUILD_NUMBER .'
           }
         }
         stage('login to dockerhub') {
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('push image') {
           steps {
-            sh 'docker push subhashinikuruva/my-app:1.0 .'
+            sh 'docker push subhashinikuruva/nodeapp:$BUILD_NUMBER .'
           }
         }
       }
