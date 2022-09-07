@@ -21,16 +21,18 @@ pipeline {
         }
         stage('push image') {
           steps {
-            sh 'docker push subhashinikuruva/nodeapp:$BUILD_NUMBER .'
+            sh 'docker push subhashinikuruva/nodeapp:$BUILD_NUMBER'
+          }
+        }
+        stage {
+          steps {
+            sshagent(['jenkins-credentials']) {
+              sh "ssh -o StrictHostKeyChecking=no  ec2-user@3.111.213.81 ${dockerRun}"
+            }
           }
         }
       }
-    post {
-      always {
-        sh 'docker logout'
-      }
-    }
-  }
+}
 
           
           
