@@ -6,7 +6,7 @@ pipeline {
       stages {
         stage('SCM Checkout') {
           steps {
-            git
+            git branch: 'main', url: 'https://github.com/subbuto/angular-app-1.git'
           }
         }
         stage('Build Dockerimage') {
