@@ -24,7 +24,7 @@ pipeline {
             sh 'docker push subhashinikuruva/nodeapp:$BUILD_NUMBER'
           }
         }
-        stage {
+        stage('deploy container on server') {
           steps {
             sshagent(['jenkins-credentials']) {
               sh "ssh -o StrictHostKeyChecking=no  ec2-user@3.111.213.81 ${dockerRun}"
