@@ -1,25 +1,37 @@
 pipeline {
-  agent {
-    docker { image 'node:latest' }
-  }
-  stages {
-    stage('Install') {
-      steps { sh 'npm install' }
+  agent any {
+    environment {
+      DOCKERHUB_CREDENTIALS = credentials('')
     }
-
-    stage('Test') {
-      parallel {
-        stage('Static code analysis') {
-            steps { sh 'npm run-script lint' }
+      stages {
+        stage('SCM Checkout') {
+          steps {
+            git
+          }
         }
-        stage('Unit tests') {
-            steps { sh 'npm run-script test' }
+        stage('Build Dockerimage') {
+          steps {
+            sh 'docker build -t subhashinikuruva/my-app:1.0 .'
+          }
+        }
+        stage('login to dockerhub') {
+          steps {
+            sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          }
+        }
+        stage('push image') {
+          steps {
+            sh 'docker push subhashinikuruva/my-app:1.0 .'
+          }
         }
       }
-    }
-
-    stage('Build') {
-      steps { sh 'npm run-script build' }
+    post {
+      always {
+        sh 'docker logout'
+      }
     }
   }
 }
+          
+          
+        
